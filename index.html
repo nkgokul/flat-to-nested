@@ -1,0 +1,66 @@
+<html>
+<head>
+    <script>
+        const input = [{
+            pos: 1,
+            text: 'Andy'
+        },
+            {
+                pos: 1,
+                text: 'Harry'
+            },
+            {
+                pos: 2,
+                text: 'David'
+            },
+            {
+                pos: 2,
+                text: 'Edger'
+            },
+            {
+                pos: 1,
+                text: 'Lisa'
+            },
+        ];
+        const output = [];
+        const prevIdx = 1;
+
+        function createChild(input, output, prevIdx) {
+            if (input.pos === prevIdx) {
+                output.push(input);
+            } else if (input.pos > prevIdx) {
+                prevIdx += 1;
+                let children = output[output.length - 1].children;
+                if (!children) {
+                    children = [];
+                    output[output.length - 1].children = children;
+                }
+                createChild(input, children, prevIdx);
+            } else if (input.pos < prevIdx) {
+                prevIdx -= 1;
+                let children = output[output.length - 1].children;
+                if (!children) {
+                    children = [];
+                    output[output.length - 1].children = children;
+                }
+                createChild(input, children, prevIdx);
+            }
+        }
+
+        function convert () {
+            for (i=0; i<input.length; i++) {
+                createChild(input[i], output, prevIdx);
+            }
+            console.log(output);
+            document.getElementById('output').innerText = JSON.stringify(output);
+        }
+    </script>
+</head>
+</html>
+
+<body>
+<div id="output"></div>
+<script>
+    convert();
+</script>
+</body>
