@@ -62,6 +62,7 @@ function runTestforFixedValues() {
     { pos: 5, text: "Edger" },
     { pos: 6, text: "Lisa" }
   ];
+  // All those involving Alphabets were generated from the random function
   inputSets.push(input);
   input = [
     { pos: 1, text: "A" },
@@ -143,12 +144,15 @@ function runTests() {
   console.log("Running Tests for Fixed Values\n");
   runTestforFixedValues();
   console.log("\nRunning Tests for Random\n");
-  loop(runTestforRandom, 20);
+  loop(runTestforRandom, 10);
 }
 
 function getRandomNumber(start = 1, end = 10) {
-  //works when both start,end are >=1 and end > start
-  return (parseInt(Math.random() * end) % (end - start + 1)) + start;
+  if (start > end) {
+    [start, end] = [end, start];
+  }
+  let range = end - start + 1;
+  return (parseInt(Math.random() * range) % range) + start;
 }
 
 const loop = (fn, times = 5, params = []) => {
