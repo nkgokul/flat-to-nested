@@ -147,15 +147,16 @@ function runTests() {
 }
 
 function getRandomNumber(start = 1, end = 10) {
-  return parseInt(Math.random() * end) % end + start;
+  //works when both start,end are >=1 and end > start
+  return (parseInt(Math.random() * end) % (end - start + 1)) + start;
 }
 
-const loop = (fn, times) => {
+const loop = (fn, times = 5, params = []) => {
   if (!times) {
     return;
   }
-  fn();
-  loop(fn, times - 1);
+  fn(...params);
+  loop(fn, times - 1, params);
 };
 
 runTests();
